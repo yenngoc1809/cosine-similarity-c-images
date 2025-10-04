@@ -1,16 +1,17 @@
-# Image Similarity Detection in C
+# Background Removal in C
 
-This project implements **image similarity detection** in C using **cosine similarity** and pixel-level comparison.
-It demonstrates how to load, process, and compare images using the lightweight [stb_image](https://github.com/nothings/stb) and [stb_image_write](https://github.com/nothings/stb) libraries.
+This project implements a simple **background removal** program in C.
+It compares two images pixel by pixel and replaces the background with a new one when the difference between pixels exceeds a threshold.
+The program uses the lightweight [stb_image](https://github.com/nothings/stb) and [stb_image_write](https://github.com/nothings/stb) libraries for loading and saving images.
 
 ---
 
 ## ✨ Features
 
-* Load `.jpg` or `.png` images.
-* Compare two images using **cosine similarity** between their pixel vectors.
-* Threshold-based background replacement (basic).
-* Save the processed image as a new file.
+* Load `.jpg` images using `stb_image`.
+* Compare **foreground** and **background** images pixel by pixel.
+* Replace background pixels with a **new background image** if they differ significantly.
+* Save the result as a new image.
 
 ---
 
@@ -43,18 +44,18 @@ cd <repo-name>
 ### 2. Compile
 
 ```bash
-gcc main.c -o image_detect -lm
+gcc main.c -o background_removal -lm
 ```
 
 ### 3. Run
 
 ```bash
-./image_detect
+./background_removal
 ```
 
 ---
 
-## 🖼️ Example (Background Replacement)
+## 🖼️ Example
 
 Input:
 
@@ -64,33 +65,7 @@ Input:
 
 Output:
 
-* `result.jpg` (foreground blended into new background)
-
----
-
-## 🔎 Example (Cosine Similarity)
-
-You can add a cosine similarity function like this:
-
-```c
-double cosine_similarity(unsigned char *img1, unsigned char *img2, int size) {
-    double dot = 0.0, norm1 = 0.0, norm2 = 0.0;
-    for (int i = 0; i < size; i++) {
-        dot   += img1[i] * img2[i];
-        norm1 += img1[i] * img1[i];
-        norm2 += img2[i] * img2[i];
-    }
-    return dot / (sqrt(norm1) * sqrt(norm2) + 1e-10);
-}
-```
-
-Usage:
-
-```c
-int size = width * height * channel;
-double sim = cosine_similarity(image1, image2, size);
-printf("Cosine similarity = %f\n", sim);
-```
+* `result.jpg` → foreground blended into the new background
 
 ---
 
@@ -103,9 +78,9 @@ printf("Cosine similarity = %f\n", sim);
 
 ## 🚀 Future Work
 
-* Improve **cosine similarity**-based detection for better accuracy.
-* Add CLI arguments for input/output paths.
-* Batch process multiple images.
+* Add support for PNG and other formats.
+* Allow custom threshold values.
+* Implement similarity metrics (e.g., cosine similarity) for more advanced comparisons.
 
 ---
 
